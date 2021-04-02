@@ -53,7 +53,7 @@ public class DrinkCommand {
         if (name.length() > 0 && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
             allAliases.add(name);
         }
-        this.noPermissionMessage = method.getAnnotation(NoPermission.class).message();
+        this.noPermissionMessage = method.getAnnotation(NoPermission.class).value();
     }
 
     public String getMostApplicableUsage() {
