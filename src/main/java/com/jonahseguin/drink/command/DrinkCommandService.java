@@ -149,13 +149,16 @@ public class DrinkCommandService implements CommandService {
         Preconditions.checkNotNull(command, "Command cannot be null");
         Preconditions.checkNotNull(label, "Label cannot be null");
         Preconditions.checkNotNull(args, "Args cannot be null");
-        if (authorizer.isAuthorized(sender, command)) {
-            if (command.isRequiresAsync()) {
-                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> finishExecution(sender, command, label, args));
-            } else {
-                finishExecution(sender, command, label, args);
-            }
+        if (!authorizer.isAuthorized(sender, command)) {
+            sender.sendMessage(ChatColor.RED + command.getNoPermissionMessage());
+            return;
         }
+        if (command.isRequiresAsync()) {
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> finishExecution(sender, command, label, args));
+        } else {
+            finishExecution(sender, command, label, args);
+        }
+
     }
 
     private void finishExecution(@Nonnull CommandSender sender, @Nonnull DrinkCommand command, @Nonnull String label, @Nonnull String[] args) {
@@ -175,8 +178,7 @@ public class DrinkCommandService implements CommandService {
                 sender.sendMessage(ChatColor.RED + "Could not perform command.  Notify an administrator");
                 throw new DrinkException("Failed to execute command '" + command.getName() + "' with arguments '" + StringUtils.join(Arrays.asList(args), ' ') + " for sender " + sender.getName(), ex);
             }
-        }
-        catch (CommandExitMessage ex) {
+        } catch (CommandExitMessage ex) {
             sender.sendMessage(ChatColor.RED + ex.getMessage());
         } catch (CommandArgumentException ex) {
             sender.sendMessage(ChatColor.RED + ex.getMessage());

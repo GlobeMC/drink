@@ -1,5 +1,6 @@
 package com.jonahseguin.drink.command;
 
+import com.jonahseguin.drink.annotation.NoPermission;
 import com.jonahseguin.drink.exception.CommandStructureException;
 import com.jonahseguin.drink.exception.MissingProviderException;
 import com.jonahseguin.drink.parametric.CommandParameter;
@@ -30,6 +31,8 @@ public class DrinkCommand {
     private final boolean requiresAsync;
     private final String generatedUsage;
 
+    private final String noPermissionMessage;
+
     public DrinkCommand(DrinkCommandService commandService, String name, Set<String> aliases, String description, String usage, String permission, Object handler, Method method) throws MissingProviderException, CommandStructureException {
         this.commandService = commandService;
         this.name = name;
@@ -50,6 +53,7 @@ public class DrinkCommand {
         if (name.length() > 0 && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
             allAliases.add(name);
         }
+        this.noPermissionMessage = method.getAnnotation(NoPermission.class).message();
     }
 
     public String getMostApplicableUsage() {
