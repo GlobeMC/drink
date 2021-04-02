@@ -1,12 +1,14 @@
 package com.jonahseguin.drink.command;
 
 import com.jonahseguin.drink.annotation.NoPermission;
+import com.jonahseguin.drink.annotation.Require;
 import com.jonahseguin.drink.exception.CommandStructureException;
 import com.jonahseguin.drink.exception.MissingProviderException;
 import com.jonahseguin.drink.parametric.CommandParameter;
 import com.jonahseguin.drink.parametric.CommandParameters;
 import com.jonahseguin.drink.parametric.DrinkProvider;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -53,7 +55,9 @@ public class DrinkCommand {
         if (name.length() > 0 && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
             allAliases.add(name);
         }
-        this.noPermissionMessage = method.getAnnotation(NoPermission.class).value();
+
+        if (method.isAnnotationPresent(NoPermission.class)) this.noPermissionMessage = method.getAnnotation(NoPermission.class).value();
+        else this.noPermissionMessage = ChatColor.RED + "You do not have permission to perform this command.";
     }
 
     public String getMostApplicableUsage() {

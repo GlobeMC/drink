@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface NoPermission {
 
-    String value() default "You do not have permission to perform this command.";
+    String value();
 }
