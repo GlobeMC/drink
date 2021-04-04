@@ -19,6 +19,7 @@ import com.jonahseguin.drink.provider.*;
 import com.jonahseguin.drink.provider.spigot.*;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -87,8 +88,9 @@ public class DrinkCommandService implements CommandService {
         bind(Player.class).annotatedWith(Sender.class).toProvider(PlayerSenderProvider.INSTANCE);
 
         bind(Player.class).toProvider(new PlayerProvider(plugin));
-        plugin.getLogger().info("111");
-//        bind(OfflinePlayer.class).toProvider(new OfflinePlayerProvider(plugin));
+        bind(OfflinePlayer.class).toProvider(new OfflinePlayerProvider(plugin));
+
+        Bukkit.getLogger().info("1111");
     }
 
     @Override
