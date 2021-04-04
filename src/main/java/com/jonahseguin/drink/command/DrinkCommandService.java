@@ -85,9 +85,10 @@ public class DrinkCommandService implements CommandService {
         bind(CommandSender.class).annotatedWith(Sender.class).toProvider(CommandSenderProvider.INSTANCE);
         bind(ConsoleCommandSender.class).annotatedWith(Sender.class).toProvider(ConsoleCommandSenderProvider.INSTANCE);
         bind(Player.class).annotatedWith(Sender.class).toProvider(PlayerSenderProvider.INSTANCE);
-        bind(Player.class).toProvider(new PlayerProvider(plugin));
 
-        bind(OfflinePlayer.class).toProvider(new OfflinePlayerProvider(plugin));
+        bind(Player.class).toProvider(new PlayerProvider(plugin));
+        plugin.getLogger().info("111");
+//        bind(OfflinePlayer.class).toProvider(new OfflinePlayerProvider(plugin));
     }
 
     @Override
