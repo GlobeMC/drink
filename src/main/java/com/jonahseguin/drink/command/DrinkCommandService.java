@@ -90,7 +90,7 @@ public class DrinkCommandService implements CommandService {
         bind(Player.class).toProvider(new PlayerProvider(plugin));
         bind(OfflinePlayer.class).toProvider(new OfflinePlayerProvider(plugin));
 
-        Bukkit.getLogger().info("1111");
+        System.out.println("111");
     }
 
     @Override
