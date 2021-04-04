@@ -16,13 +16,11 @@ import com.jonahseguin.drink.parametric.DrinkProvider;
 import com.jonahseguin.drink.parametric.ProviderAssigner;
 import com.jonahseguin.drink.parametric.binder.DrinkBinder;
 import com.jonahseguin.drink.provider.*;
-import com.jonahseguin.drink.provider.spigot.CommandSenderProvider;
-import com.jonahseguin.drink.provider.spigot.ConsoleCommandSenderProvider;
-import com.jonahseguin.drink.provider.spigot.PlayerProvider;
-import com.jonahseguin.drink.provider.spigot.PlayerSenderProvider;
+import com.jonahseguin.drink.provider.spigot.*;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -88,6 +86,8 @@ public class DrinkCommandService implements CommandService {
         bind(ConsoleCommandSender.class).annotatedWith(Sender.class).toProvider(ConsoleCommandSenderProvider.INSTANCE);
         bind(Player.class).annotatedWith(Sender.class).toProvider(PlayerSenderProvider.INSTANCE);
         bind(Player.class).toProvider(new PlayerProvider(plugin));
+
+        bind(OfflinePlayer.class).toProvider(new OfflinePlayerProvider(plugin));
     }
 
     @Override
